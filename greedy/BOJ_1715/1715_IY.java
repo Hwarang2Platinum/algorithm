@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.PriorityQueue;
 
-public class Main {
+public class 1715_IY {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
