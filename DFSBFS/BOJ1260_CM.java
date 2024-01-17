@@ -34,7 +34,7 @@ public class BOJ1260_CM {
         bfs(V);
     }
 
-    static int cnt=0;
+    
     public static void dfs(int start) {
         visited[start] = true;
         System.out.print(start + " ");
