@@ -1,5 +1,3 @@
-package com.ssafy.day1.a_basic;
-
 import java.util.Scanner;
 import java.util.PriorityQueue;
 
