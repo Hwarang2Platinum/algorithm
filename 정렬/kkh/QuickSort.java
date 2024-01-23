@@ -1,5 +1,7 @@
 package algorithm;
 
+import java.util.Arrays;
+
 public class QuickSort {
 	// pivot 잡기
 	public static void sort(int[] arr) {
@@ -27,8 +29,8 @@ public class QuickSort {
 		}
 		swap(arr,l,pivot_idx);
 		
-		quickSort(arr, ll, l-1);
-		quickSort(arr, l+1, rr);
+		if(ll<l-1) quickSort(arr, ll, l-1);
+		if(l+1<rr) quickSort(arr, l+1, rr);
 		
 	}
 
