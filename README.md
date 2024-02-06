@@ -11,7 +11,7 @@ SSAFY 11반 알고리즘 스터디..!!**
 
 [https://us06web.zoom.us/j/5323408258?pwd=SmJ2cHBuSVNrZWZMZERDVC9DSVh5QT09](https://us06web.zoom.us/j/5323408258?pwd=SmJ2cHBuSVNrZWZMZERDVC9DSVh5QT09)
 
-**팀원**: 김경호, 김인엽, 이찬민, 송인범
+**팀원**: 오화랑(마스코트), 김경호, 김인엽, 이찬민, 송인범
 
 **커리큘럼 가이드** : 이것이 취업을 위한 코딩테스트다
 
