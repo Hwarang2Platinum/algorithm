@@ -11,17 +11,23 @@ SSAFY 11반 알고리즘 스터디..!!**
 
 [https://us06web.zoom.us/j/5323408258?pwd=SmJ2cHBuSVNrZWZMZERDVC9DSVh5QT09](https://us06web.zoom.us/j/5323408258?pwd=SmJ2cHBuSVNrZWZMZERDVC9DSVh5QT09)
 
-**팀원**: 김경호, 김인엽, 이찬민
+**팀원**: 김경호, 김인엽, 이찬민, 송인범
 
 **커리큘럼 가이드** : 이것이 취업을 위한 코딩테스트다
 
 **Github:**[Hwarang2Platinum (github.com)](https://github.com/Hwarang2Platinum)
 
+**Github 파일 제출 형식**
+- 백준 : B문제번호_문제이름_한글이름
+- SWEA : S문제번호_문제이름_한글이름
+- 프로그래머스 : P_문제이름_한글이름
+(문제이름은 띄어쓰기 제외한 이름)
+
 **언어**: Java
 
 **스터디 시간**
 
-- 월, 수, 금 저녁 6시반
+- 월, 목 저녁 6시반
 
 **스터디 장소**
 
