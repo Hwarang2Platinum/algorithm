@@ -5,14 +5,13 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class B3190_¹ì_¼ÛÀÎ¹ü {
+public class B3190_ë±€_ì†¡ì¸ë²” {
     static int end;
     static StringTokenizer st;
     static int dx[] = {0, 1,  0, -1};
     static int dy[] = {1, 0, -1, 0};
     
-    
-    // ½Ã°£ À§Ä¡ Ã¤Å·
+    // ì‹œê°„ ìœ„ì¹˜ ì±„í‚¹
     static class rotation{
         int time;
         char where;
@@ -60,7 +59,7 @@ public class B3190_¹ì_¼ÛÀÎ¹ü {
         int idx = 0;
         
         Queue<Node> snake = new ArrayDeque<>();
-        snake.offer(new Node(headX, headY));  // ¸Ó¸® ±æÀÌ¸¸ Ãß°¡, ²¿¸®´Â ÈÄ ·ÎÁ÷ Ã³¸®
+        snake.offer(new Node(headX, headY));  // ë¨¸ë¦¬ ê¸¸ì´ë§Œ ì¶”ê°€, ê¼¬ë¦¬ëŠ” í›„ ë¡œì§ ì²˜ë¦¬
         Dummy[headX][headY]=1;
         		
         while(true) {
@@ -68,13 +67,13 @@ public class B3190_¹ì_¼ÛÀÎ¹ü {
             int ax = headX + dx[idx];
             int ay = headY + dy[idx];
             
-            // ³ª¸¦ ¸¸³¯ ¶§
+            // ë‚˜ë¥¼ ë§Œë‚  ë•Œ
             if(ax < 1 || ay <1 || ax > n || ay > n || Dummy[ax][ay] == 1) {
                 break;
             }
             
-            // ÀÌµ¿°¡´ÉÁ¶°Ç
-            // -1ÀÌ¸é pollÀ» ¾ÈÇÑ´Ù
+            // ì´ë™ê°€ëŠ¥ì¡°ê±´
+            // -1ì´ë©´ pollì„ ì•ˆí•œë‹¤
             if(Dummy[ax][ay]==0) {
                 Node node = snake.poll();
                 Dummy[node.x][node.y]=0;
@@ -86,7 +85,7 @@ public class B3190_¹ì_¼ÛÀÎ¹ü {
             headX =ax;
             headY =ay;
             
-            // ÀÌµ¿ Á¶°Ç
+            // ì´ë™ ì¡°ê±´
             if(!time.isEmpty() && time.peek().time == end) {
                 rotation now = time.poll();
                 if (now.where =='L') {
