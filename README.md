@@ -9,7 +9,7 @@ SSAFY 11반 알고리즘 스터디..!!**
 <aside>
 👋 알고리즘의 기초부터 차근차근 밟아나가며 성장합시다.
 
-[https://us06web.zoom.us/j/5323408258?pwd=SmJ2cHBuSVNrZWZMZERDVC9DSVh5QT09](https://us06web.zoom.us/j/5323408258?pwd=SmJ2cHBuSVNrZWZMZERDVC9DSVh5QT09)
+[ZOOM 회의실 링크](https://us06web.zoom.us/j/5323408258?pwd=SmJ2cHBuSVNrZWZMZERDVC9DSVh5QT09)
 
 **팀원**: 오화랑(마스코트), 김경호, 김인엽, 이찬민, 송인범
 
