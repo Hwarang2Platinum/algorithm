@@ -2,6 +2,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -9,6 +12,7 @@ import java.util.StringTokenizer;
 public class Main {
 	static int N,answer=0;
 	static int[][] board;
+	static boolean[][] eated;
 	static int state = 2;
 	
 	public static void main(String[] args) throws IOException {
@@ -17,6 +21,7 @@ public class Main {
 		N = Integer.parseInt(br.readLine());
 		board = new int[N][N];
 		int[] cur = new int[2];
+		boolean[] fishes = new boolean[401];
 		
 		for(int i=0;i<N;i++) {
 			st = new StringTokenizer(br.readLine());
@@ -28,6 +33,7 @@ public class Main {
 					cur[1] = j;
 					continue;
 				}
+//				if(fish>0) fishes[i*N+j] = true;
 			}
 		}
 		// 1. bfs로 가장 가까운 먹거리를찾는다.
@@ -37,12 +43,12 @@ public class Main {
 		int ans = 0;
 		int[] ret = null;
 		while((ret = bfs(cur[0],cur[1]))!=null) {
-//			debuging
 //			System.out.println("state=> "+state);
 //			for(int[] b : board) {
 //				System.out.println(Arrays.toString(b));
 //			}
 //			System.out.println("-----------------------");
+			
 			
 			eatingNum++;
 			if(eatingNum==state) {
@@ -54,6 +60,7 @@ public class Main {
 			board[cur[0]][cur[1]] = 0;
 			cur[0] = ret[0];
 			cur[1] = ret[1];
+//			System.out.println(ans);
 		}
 		
 		System.out.println(ans);
@@ -63,32 +70,42 @@ public class Main {
 		int[] dr = {-1,0,0,1};
 		int[] dc = {0,-1,1,0};
 		boolean[][] visited = new boolean[400][400];
+		int[] retu = null;
 		Queue<int[]> queue = new ArrayDeque<>();
 		PriorityQueue<Fish> pq= new PriorityQueue<>();
-		queue.add(new int[] {r,c});
-		int ret = 0;
+		queue.add(new int[] {r,c,0});
+		int ans = 10000;
 		while(!queue.isEmpty()) {
-			int size = queue.size();
-			ret++;
-			while(--size>=0) {
-				int[] cur = queue.poll();
-				r = cur[0]; c = cur[1];
-				if(board[r][c]!=0 && board[r][c] < state) {
-					pq.add(new Fish(cur[0],cur[1],board[cur[0]][cur[1]],size));
-				}
-				
-				for(int i=0;i<4;i++) {
-					int nextR = r + dr[i]; int nextC = c+dc[i];
-					if(isOut(nextR,nextC)|| visited[nextR][nextC]|| board[nextR][nextC] > state) 
-						continue;
-					visited[nextR][nextC] = true;
-					queue.add(new int[] {nextR,nextC});
-				}
+			int[] cur = queue.poll();
+//			System.out.println(cur[0] +","+cur[1]);
+			r = cur[0]; c = cur[1];
+			visited[r][c] = true;
+			if(ans<cur[2]) {
+				Fish ret = pq.peek();
+//				System.out.println("=="+ret);
+				answer+=ans;
+				return new int[] {ret.r,ret.c,ret.cnt};
 			}
-			if(pq.size()>0) return new int[] {pq.peek().r, pq.peek().c, ret-1};
+			if(board[r][c]!=0 && board[r][c] < state) {
+				pq.add(new Fish(cur[0],cur[1],board[cur[0]][cur[1]], cur[2]));
+				if(ans==10000) {
+					ans = cur[2];
+					retu = new int[] {cur[0],cur[1],cur[2]};
+//					System.out.println(ans);
+				}
+//				return cur; 
+			}
 			
+			for(int i=0;i<4;i++) {
+				int nextR = r + dr[i]; int nextC = c+dc[i];
+				
+				if(isOut(nextR,nextC)|| visited[nextR][nextC]|| board[nextR][nextC] > state) 
+					continue;
+				visited[nextR][nextC] = true;
+				queue.add(new int[] {nextR,nextC,cur[2]+1});
+			}
 		}
-		return null;
+		return retu;
 	}
 	
 	public static boolean isOut(int r, int c) {
@@ -118,3 +135,4 @@ public class Main {
 		
 	}
 }
+ 
