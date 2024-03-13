@@ -13,7 +13,7 @@ class Solution {
             if(adjList[d]==null) adjList[d] = new ArrayList<>();
             adjList[d].add(new int[]{c,adj[2]});
         }
-//
+//ㅁㄴㅇ
         int min = Integer.MAX_VALUE;
         int[] distStoCommonPoint = dijkstra(s,n,adjList);
         for(int commonPoint=0; commonPoint<n;commonPoint++){
