@@ -1,0 +1,15 @@
+package March;
+
+public class P_정수삼각형_송인범 {
+	
+	public static int solution(int[][] triangle) {
+	        int answer = 0;
+	        return answer;
+	    }
+
+	public static void main(String[] args) {
+		solution(new int [][] {{7},{3,8},{8,1,0},{2,7,4,4},{4,5,2,6,5})
+
+	}
+
+}

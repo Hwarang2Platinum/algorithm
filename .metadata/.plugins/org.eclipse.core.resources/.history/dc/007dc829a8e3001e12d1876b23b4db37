@@ -1,0 +1,26 @@
+package March;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class B4485_녹색옷을입은애가젤다지_송인범 {
+
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		
+		while(true) {
+			// 종료 조건
+			
+			
+			
+		}
+		
+		
+		
+
+	}
+
+}

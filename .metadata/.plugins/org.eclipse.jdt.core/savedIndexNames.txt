@@ -1,0 +1,5 @@
+INDEX VERSION 1.134+C:\Users\sib08\algorithm\.metadata\.plugins\org.eclipse.jdt.core
+3276926477.index
+3155994847.index
+3883950653.index
+1865797976.index
