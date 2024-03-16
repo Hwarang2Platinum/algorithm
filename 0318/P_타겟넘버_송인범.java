@@ -1,4 +1,4 @@
-package March;
+
 
 public class P_타겟넘버_송인범 {
    static int answer = 0;

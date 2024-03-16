@@ -1,4 +1,4 @@
-package March;
+
 
 public class P_정수삼각형_송인범 {
 	
