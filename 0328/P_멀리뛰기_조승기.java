@@ -1,34 +1,12 @@
-public class P_멀리뛰기_조승기 {
-    class Solution {
-        public static int minSubArrayLen(int target, int[] nums) {
-            int l = 0;
-            int r = 0;
-            int N = nums.length;
-            int sum = nums[0];
-            int ans = 12345678;
+class Solution {
+    public static long solution(int n) {
+        int[] dp = new int[Math.max(n+1, 3)];
+        dp[1] = 1;
+        dp[2] = 2;
 
-            while (l < N && r < N) {
-                if (sum >= target) {
-                    ans = Math.min(ans, r - l + 1);
-                    if (ans == 1) {
-                        break;
-                    }
-                    sum -= nums[l];
-                    l++;
-                } else {
-                    r++;
-                    if (r == N) {
-                        continue;
-                    }
-                    sum += nums[r];
-                }
-            }
-            return ans;
+        for (int i = 3; i <= n; i++) {
+            dp[i] = (dp[i-1] + dp[i-2]) % 1234567;
         }
+        return dp[n];
     }
-
-    public static void main(String[] args) {
-        System.out.println(Solution.minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3}));
-    }
-
 }
