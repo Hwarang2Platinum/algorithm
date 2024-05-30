@@ -4,7 +4,7 @@ import java.util.*;
 /**
  * B1967_트리의지름_김종호
  */
-public class Main {
+public class B1967_트리의지름_김종호 {
 
     static int N, max, maxnode;
     static boolean visit[];
@@ -66,6 +66,6 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new B1967_트리의지름_김종호().solution();
     }
 }
