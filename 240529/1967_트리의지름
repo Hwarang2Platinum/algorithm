@@ -1,0 +1,30 @@
+def dfs(n, v):
+    for weight, nextNode in arr[n]:
+        if(length[nextNode] == -1):
+            length[nextNode] = weight + v
+            dfs(nextNode, weight + v)
+# 거리 계산         
+
+n = int(input())
+# 배열 설정
+arr = [[] for i in range(n+1)]
+
+for i in range(n-1):
+    a,b,c = map(int ,input().split())
+    arr[a].append([c,b])
+    arr[b].append([c,a])
+# 입출력 완료
+
+length = [-1] * (n+1)
+length[1] = 0
+dfs(1,0) # 가장 길이가 긴 것을 찾는다.
+
+# 그 이후 거기서 가장 긴 것을 찾아야한다. 즉 시작 위치를 바꾸기만 해결
+Maxlen = length.index(max(length))
+length = [-1] * (n+1)
+length[Maxlen] = 0
+dfs(Maxlen, 0)
+
+print(max(length))
+    
+
