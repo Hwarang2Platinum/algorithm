@@ -5,7 +5,7 @@ import java.util.*;
 
 public class B15651_N과M3_오화랑 {
     static int[] each;
-    static StringBuilder sb = new StringBuilder();
+    static StringBuilder sb = new StringBuilder(); // SpringBuilder로 최대한 최적화를 시도함.
 
     public static void main(String[] args) throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
