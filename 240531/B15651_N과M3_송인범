@@ -1,0 +1,15 @@
+# 2년 전 푼거 복원.. 한번만 봐줘 넘 졸려
+def backtraking(n,m):
+    if len(check)==m:
+        print(*check)
+    else:
+        for i in range(1,n+1):
+            check.append(i)
+            backtraking(n,m)
+            check.pop()
+        
+        
+n,m=map(int,input().split())
+check=[]
+
+backtraking(n,m)
