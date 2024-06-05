@@ -70,6 +70,7 @@ public class Main {
                 graph[e].add(new Data(s, w));
             }
         }
+        // 최소 스패닝 트리
         prim();
         for (int i = 1; i <= N; i++) {
             if (!isVisit[i]) {
