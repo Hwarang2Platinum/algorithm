@@ -8,7 +8,7 @@
 import java.io.*;
 import java.util.*;
 
-public class B1238_파티_오화랑_최적화요구 {
+public class B1238_파티_오화랑 {
 
     static class node {
         int to, cost;
@@ -45,12 +45,13 @@ public class B1238_파티_오화랑_최적화요구 {
             graph.get(from).add(new node(to, cost));
         }
         Arrays.fill(dist, MAX);
-        dijkstra(N, P);
+        dijkstra(N, P); // 다익스트라로 파티 장소에서 집으로 돌아가는 것을 먼저 계산한다.
 
         PriorityQueue<node> PQ;
         boolean[] visited;
         node temp;
         for (int i = 1; i <= N; i++) {
+            // PQ를 활용한, BFS를 통해 집에서 Party장소 까지의 거리를 계산하고, 도달하면 dist 배열과 더해서 값 계산
             if (i == P)
                 continue;
             PQ = new PriorityQueue<>((o1, o2) -> Integer.compare(o1.cost, o2.cost));
