@@ -6,6 +6,7 @@ import java.util.*;
 // 둘째 줄부터, 간선의 정보가 주어짐
 // 아무 단말 Node를골라내고, 반드시 포함될 수 밖에 없는 Node를 찾아냈다.
 // 해당 단말 Node에서 다시 한번, Dijkstra를 해서 최장 지름을 찾아냄.
+// Re Commit
 
 public class B1167_트리의지름_오화랑 {
     static class node {
