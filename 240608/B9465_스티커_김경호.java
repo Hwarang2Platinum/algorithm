@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * BOJ 9465 - 스티커
  * dp문제
- * bottom-up으로 해결
+ * 탑다운으로 해결
  * dp
  *  - 스티커의 첫번째 선택했을 때 dp[depth][0]
  *  - 스티커의 두번째 선택했을 때 dp[depth][1]
