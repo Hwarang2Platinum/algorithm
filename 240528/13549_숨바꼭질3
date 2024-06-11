@@ -1,0 +1,39 @@
+from collections import deque
+
+
+n,k = map(int,input().split())
+cnt = 0
+answer = -1
+
+# bfs 탐색
+visited = [-1] * 1000001
+
+# 초기화
+queue = deque([n])
+visited[n] = 0
+
+
+
+while queue:
+    cur = queue.popleft()
+
+    if cur == k:
+        answer = visited[cur]
+        break
+
+# 세가지를 본다
+    for i in (cur-1, cur+1, cur * 2):
+        if visited[i] != -1 or i < 0 or i>100000:
+            continue  # exception
+
+        if i == cur * 2:
+            visited[i] = visited[cur]
+            queue.appendleft(i)
+
+        else:
+            visited[i] = visited[cur]+1
+            queue.append(i)
+
+
+
+print(answer)
