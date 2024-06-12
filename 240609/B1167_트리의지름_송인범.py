@@ -12,8 +12,6 @@ def dfs(n, v):
             dfs(nextnode, weight + v)
             
 
-
-
 for i in range(v):
     arr = list(map(int , input().split()))
     for e in range(1, len(arr)-2, 2):
