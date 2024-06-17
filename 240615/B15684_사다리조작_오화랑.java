@@ -11,7 +11,7 @@ import java.util.*;
 // 270_C_3 => 3_244_140 (완탐이 그래도 가능한 부분)
 // 3_244_140 * 30 => 총 계산 시간 97,324,200개
 
-public class B15684_사다리조작_오화랑_코드최적화_시간최적화요구 {
+public class B15684_사다리조작_오화랑 {
     static class possLine {
         int x, y;
 
