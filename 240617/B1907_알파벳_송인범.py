@@ -24,7 +24,7 @@ def bfs():
             if what+board[ax][ay] not in v[ax][ay]:
                 q.append((ax,ay,what+board[ax][ay]))
                 v[ax][ay].add((what+board[ax][ay]))
+                
     return maxnum
-print(1)
 maxnum = bfs()
 print(maxnum)
