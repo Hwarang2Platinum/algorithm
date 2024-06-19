@@ -33,6 +33,5 @@ for idx in range(q): # 도현이는 1번 구역에서 출발
     elif x[0] == 3:
         # 이분 탐색 시작
         what = binary_find(now)
-        print("정답은 %d" %what)
 
 
