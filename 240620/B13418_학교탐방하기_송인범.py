@@ -28,13 +28,13 @@ for a, b, w in edge:
     if w == 1:
         a = find(a, best_parent)
         b = find(b, best_parent)    
-        if a != b: # 하나는 오르막이고 하나는 내리막 속성
+        if a != b: # 연결이 안되서 연결
             best -=1
             union(a, b, best_parent)
     else:
         a = find(a, worst_parent)
         b = find(b, worst_parent)
-        if a != b:
+        if a != b: # 연결이 안되서 연결
             worst += 1
             union(a, b, worst_parent)
 
