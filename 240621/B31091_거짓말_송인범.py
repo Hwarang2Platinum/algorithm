@@ -2,6 +2,8 @@ import sys
 input = sys.stdin.readline
 
 # 거짓말 하는 사람의 가능한 갯수를 구하는 문제
+# 풀이 참고
+# 아이디어가 퍼킹하네요
 n = int(input())
 people = list(map(int, input().split()))
 up =  [0] * (n+1)
