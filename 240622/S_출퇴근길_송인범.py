@@ -1,6 +1,6 @@
 import sys
 input = sys.stdin.readline
-
+sys.setrecursionlimit(10**5) 
 
 def DFS(now, graph, visit):
     if visit[now]: return
