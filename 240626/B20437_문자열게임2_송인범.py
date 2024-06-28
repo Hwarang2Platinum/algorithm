@@ -10,7 +10,6 @@ for _ in range(t):
 
     for i in range(len(w)):
         num  = ord(w[i]) - ord('a')
-        print(num)
         counting[num].append(i) # index를 더한다.
         if len(counting[num]) >= k:
             result.append(w[counting[num][-k]: counting[num][-1]+1])
