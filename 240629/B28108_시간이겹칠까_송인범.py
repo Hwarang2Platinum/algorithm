@@ -13,7 +13,7 @@ for _ in range(N):
     imos[e+1]-=1
 
 # 누적합
-for i in range(1, 1000000):
+for i in range(1, 1000001):
     imos[i] += imos[i-1]
     
 Q = int(input())
