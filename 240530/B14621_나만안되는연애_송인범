@@ -1,0 +1,47 @@
+# 스패닝 트리 문제
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split())
+arr = list(input().split())
+edges = []
+
+answer = 0
+cnt = 1
+for i in range(m):
+    w, t, v = map(int, input().split())
+    # 남초 여초 대학교를 연결할 때 수정
+    if(arr[w-1]!=arr[t-1]):
+        edges.append((w, t, v))
+
+edges.sort(key=lambda x: x[2])  # union-find kruscal
+
+parent = [i for i in range(n+1)]
+
+def find_parent(x):
+    if parent[x] == x:
+        return x
+    parent[x] = find_parent(parent[x])
+    return parent[x]
+
+def union(a, b):
+    a = find_parent(a)
+    b = find_parent(b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+def same(a, b):
+    return find_parent(a) == find_parent(b)
+
+for a, b, cost in edges:
+    if not same(a, b):
+        union(a, b)
+        cnt+=1
+        answer += cost
+
+if cnt == n:
+    print(answer)
+
+else: print(-1)

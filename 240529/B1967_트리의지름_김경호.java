@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 // 주의사항: 이진트리 아님....
-public class Main {
+public class B1967_트리의지름_김경호 {
     static List<int[]>[] trees;
     static int ans;
 
@@ -11,19 +11,19 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        trees = new ArrayList[N+1];
+        trees = new ArrayList[N + 1];
         ans = 0;
 
-        for (int i = 1; i < N+1; i++) {
+        for (int i = 1; i < N + 1; i++) {
             trees[i] = new ArrayList<>();
         }
-        for (int i = 0; i < N-1; i++) {
+        for (int i = 0; i < N - 1; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int num = Integer.parseInt(st.nextToken());
             int child = Integer.parseInt(st.nextToken());
             int weight = Integer.parseInt(st.nextToken());
 
-            trees[num].add(new int[]{child, weight});
+            trees[num].add(new int[] { child, weight });
         }
 
         dfs(1);
@@ -32,11 +32,11 @@ public class Main {
     }
 
     // 내 자식들중 가장 큰놈을 반환하는 함수
-    static int dfs(int num){
+    static int dfs(int num) {
 
         // 자식들중 최대 두명을 큰놈부터 저장해서 답으로 비교하자
         int maxWeight = 0;
-        PriorityQueue<Integer> pq = new PriorityQueue<Integer>(((o1, o2) -> o2-o1));
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>(((o1, o2) -> o2 - o1));
 
         // 현재 노드의 자식들을 탐색
         for (int[] children : trees[num]) {
@@ -53,14 +53,14 @@ public class Main {
         // 이진 트리가 아니므로 상위 두개를 뽑아서 비교하자
         int answer = 0;
         for (int i = 0; i < 2; i++) {
-            if(pq.isEmpty()) break;
+            if (pq.isEmpty())
+                break;
             answer += pq.poll();
         }
 
         // 자식중 큰놈 두명을 뽑았다.. 이제 다른 부모들의 자식들과도 비교해야겠지?
-        ans = Math.max(ans,answer);
+        ans = Math.max(ans, answer);
         return maxWeight;
     }
-
 
 }
