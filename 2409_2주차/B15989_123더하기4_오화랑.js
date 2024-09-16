@@ -37,25 +37,29 @@ const input = require('fs')
   .map(Number);
 
 const N = input[0];
-const countList = Array(10001).fill(0);
-countList[1] = 1;
-countList[2] = 2;
-countList[3] = 3;
-countList[4] = 4;
+const countList = Array(10001).fill([0, 0, 0]);
+countList[1] = [1, 0, 0];
+countList[2] = [2, 1, 0];
+countList[3] = [3, 0, 1];
+countList[4] = [4, 1, 0];
 
 const getCount = (target) => {
-  let totalCount = countList[target];
-  if (totalCount === 0) {
-    totalCount += getCount(target - 1) + 1;
-    if (target % 2 == 0) totalCount++;
-    else if (target % 3 === 0) totalCount++;
+  let result = countList[target];
+  if (result[0] > 0) return result;
+
+  let first, second, third;
+  first = second = third = 0;
+  if (result[0] === 0) {
+    first = getCount(target - 1)[0];
+    second = getCount(target - 2)[1] + getCount(target - 2)[2];
+    if (target % 3 === 0) third = getCount(target - 3)[2];
   }
-  countList[target] = totalCount;
-  return totalCount;
+  countList[target] = [first + second + third, second, third];
+  return countList[target];
 };
 
 for (let i = 1; i <= N; i++) {
   let target = input[i];
   getCount(target);
-  console.log(countList[target]);
+  console.log(countList[target][0]);
 }
