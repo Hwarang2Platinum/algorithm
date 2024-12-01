@@ -59,7 +59,7 @@ const fetchPickedTodayAlgorithm = async () => {
 
 const extractProblemId = (pickedProblems) => {
   const regex = /\[([0-9]+)\]\(https:\/\/www\.acmicpc\.net\/problem\/\1\)/g;
-  const ids = [...markdown.matchAll(regex)].map((match) => match[1]);
+  const ids = [...pickedProblems.matchAll(regex)].map((match) => match[1]);
   return ids;
 };
 
