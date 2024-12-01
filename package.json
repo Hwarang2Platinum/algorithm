@@ -1,13 +1,14 @@
 {
-  "name": "algorithm",
+  "name": "github-action-daily-algorithm",
   "version": "1.0.0",
   "description": "<aside>\r 💡 **플레 가즈아!!!\r SSAFY 11반 알고리즘 스터디..!!**",
-  "main": "update-algorithm-issue.js",
+  "main": "update_daily_algorithm.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Badamandarin",
   "license": "ISC",
   "dependencies": {
     "@octokit/rest": "^21.0.2",
