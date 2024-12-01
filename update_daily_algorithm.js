@@ -6,9 +6,9 @@ dotenv.config();
 
 const GIT_TOKEN = process.env.GIT_TOKEN;
 const SOLVED_AC_BASE_URL = 'https://solved.ac/api/v3/problem/show';
-const SOURCE_OWNER = 'Hwarang-Oh';
+const SOURCE_OWNER = 'tony9402';
 const SOURCE_REPO = 'baekjoon';
-const SOURCE_PATH = 'main/picked.md';
+const SOURCE_PATH = 'picked.md';
 const TARGET_ORG = 'Hwarang2Platinum';
 const TARGET_REPO = 'algorithm';
 
