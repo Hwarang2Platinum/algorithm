@@ -6,7 +6,7 @@ dotenv.config();
 
 const GIT_TOKEN = process.env.GIT_TOKEN;
 const SOLVED_AC_BASE_URL = 'https://solved.ac/api/v3/problem/show';
-const SOURCE_OWNER = 'Hwarang-Oh';
+const SOURCE_OWNER = 'tony9402';
 const SOURCE_REPO = 'baekjoon';
 const SOURCE_PATH = 'picked.md';
 const TARGET_ORG = 'Hwarang2Platinum';
@@ -138,6 +138,17 @@ const createIssue = async (problemId, problemTitle, problemLevel, problemType) =
     title: issueTitle,
     body: issueBody,
     labels: issueLabels,
+    assignees: [
+      'kkho9654',
+      'wintiger98',
+      'dino9881',
+      'bladerunner3201',
+      'InbumS',
+      'Hwarang-Oh',
+      'chanmin97',
+      'Aiden-Jung',
+      'seungki-cho',
+    ],
   });
   console.log(`Issue created: ${data.data.html_url}`);
 };
