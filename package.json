@@ -1,0 +1,17 @@
+{
+  "name": "algorithm",
+  "version": "1.0.0",
+  "description": "<aside>\r 💡 **플레 가즈아!!!\r SSAFY 11반 알고리즘 스터디..!!**",
+  "main": "update-algorithm-issue.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/rest": "^21.0.2",
+    "axios": "^1.7.8",
+    "dotenv": "^16.4.5"
+  }
+}

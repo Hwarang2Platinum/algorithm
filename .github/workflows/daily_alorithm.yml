@@ -1,0 +1,31 @@
+name: Create Daily Algorithm Issues
+
+on:
+  schedule:
+    - cron: '0 15 * * *' # 한국 시간 자정(UTC 15:00)에 실행
+  workflow_dispatch: # 수동 실행 가능
+
+jobs:
+  create-issues:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Repository 체크아웃
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Node.js 환경 설정
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22 # Node.js 버전 지정
+
+      # 3. 의존성 설치
+      - name: Install dependencies
+        run: npm install
+
+      # 4. 스크립트 실행
+      - name: Run script
+        env:
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }} # GitHub Secrets 사용
+        run: node script.js
