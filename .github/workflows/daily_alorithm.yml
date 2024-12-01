@@ -28,4 +28,4 @@ jobs:
       - name: Run script
         env:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }} # GitHub Secrets 사용
-        run: node script.js
+        run: node update-algorithm-issue.js
