@@ -59,7 +59,7 @@ const fetchPickedTodayAlgorithm = async () => {
 
 const extractProblemId = (pickedProblems) => {
   const regex = /\[([0-9]+)\]\(https:\/\/www\.acmicpc\.net\/problem\/\1\)/g;
-  const ids = [...markdown.matchAll(regex)].map((match) => match[1]);
+  const ids = [...pickedProblems.matchAll(regex)].map((match) => match[1]);
   return ids;
 };
 
@@ -138,6 +138,17 @@ const createIssue = async (problemId, problemTitle, problemLevel, problemType) =
     title: issueTitle,
     body: issueBody,
     labels: issueLabels,
+    assignees: [
+      'kkho9654',
+      'wintiger98',
+      'dino9881',
+      'bladerunner3201',
+      'InbumS',
+      'Hwarang-Oh',
+      'chanmin97',
+      'Aiden-Jung',
+      'seungki-cho',
+    ],
   });
   console.log(`Issue created: ${data.data.html_url}`);
 };
