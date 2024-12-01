@@ -27,5 +27,5 @@ jobs:
       # 4. 스크립트 실행
       - name: Run script
         env:
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }} # GitHub Secrets 사용
-        run: node update-algorithm-issue.js
+          GIT_TOKEN: ${{ secrets.ORG_PAT_TOKEN }} # GitHub Secrets 사용
+        run: node update_daily_algorithm.js
