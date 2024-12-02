@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@octokit/rest": "^21.0.2",
+    "@actions/github": "^5.0.0",
     "axios": "^1.7.8",
     "dotenv": "^16.4.5"
   }
