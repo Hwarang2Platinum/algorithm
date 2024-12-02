@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     if: >
       github.event.issue.title &&
-      github.event.issue.title matches '^\\[\\d{8}\\] BOJ \\d+ .+'
+      startsWith(github.event.issue.title, '[') &&
+      contains(github.event.issue.title, 'BOJ')
 
     steps:
       - name: Checkout repository
