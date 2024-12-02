@@ -1,14 +1,17 @@
-name: Create Sub-Issues for Solvers
+name: Update Project Issue
 
 on:
   issues:
     types:
+      - opened
       - edited
 
 jobs:
   create-sub-issue:
     runs-on: ubuntu-latest
-    if: github.event.issue.title && github.event.issue.title.match(/^\[\d{8}\] BOJ \d+ .+/)
+    if: >
+      github.event.issue.title &&
+      github.event.issue.title matches '^\\[\\d{8}\\] BOJ \\d+ .+'
 
     steps:
       - name: Checkout repository
@@ -17,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 22
+          node-version: 18
 
       - name: Install Dependencies
         run: npm install
@@ -32,5 +35,4 @@ jobs:
           STATUS_DOING: ${{ vars.STATUS_DOING }}
           STATUS_DELETED: ${{ vars.STATUS_DELETED }}
           STATUS_PROBLEMS: ${{ vars.STATUS_PROBLEMS }}
-        run: |
-          node update_project_issue.js
+        run: node update_project_issue.js
