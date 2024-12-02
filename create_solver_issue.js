@@ -5,6 +5,8 @@ import { Octokit } from '@octokit/rest';
 dotenv.config();
 
 const GIT_TOKEN = process.env.GIT_TOKEN;
+const TARGET_ORG = process.env.TARGET_ORG;
+const TARGET_REPO = process.env.TARGET_REPO;
 const PROJECT_ID = process.env.PROJECT_ID;
 const PROJECT_FIELD_ID = process.env.PROJECT_FIELD_ID;
 const STATUS_DOING = process.env.STATUS_DOING;
@@ -64,8 +66,8 @@ const createSubIssue = async (parentIssue, solver) => {
   `;
 
   const { data } = await octokit.issues.create({
-    owner: parentIssue.repository.owner.login,
-    repo: parentIssue.repository.name,
+    owner: TARGET_ORG,
+    repo: TARGET_REPO,
     title: issueTitle,
     body: issueBody,
     assignees: [solver.assignee],
@@ -79,8 +81,8 @@ const createSubIssue = async (parentIssue, solver) => {
 const closeSubIssue = async (parentIssue, solver) => {
   try {
     const { data: issues } = await octokit.issues.listForRepo({
-      owner: parentIssue.repository.owner.login,
-      repo: parentIssue.repository.name,
+      owner: TARGET_ORG,
+      repo: TARGET_REPO,
       state: 'open',
       creator: solver.assignee,
     });
@@ -92,8 +94,8 @@ const closeSubIssue = async (parentIssue, solver) => {
     if (subIssue) {
       await assignToProjectAndSetStatus(subIssue, STATUS_DELETED);
       await octokit.issues.update({
-        owner: parentIssue.repository.owner.login,
-        repo: parentIssue.repository.name,
+        owner: TARGET_ORG,
+        repo: TARGET_REPO,
         issue_number: subIssue.number,
         state: 'closed',
       });
