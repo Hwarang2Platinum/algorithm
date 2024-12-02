@@ -24,7 +24,9 @@ jobs:
 
       - name: Run Script
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_TOKEN: ${{ secrets.ORG_PAT_TOKEN }}
+          TARGET_ORG: ${{ vars.TARGET_ORG }}
+          TARGET_REPO: ${{ vars.TARGET_REPO }}
           PROJECT_ID: ${{ secrets.HPDD_PROJECT_ID }}
           PROJECT_FIELD_ID: ${{ secrets.HPDD_PROJECT_FIELD_ID }}
           STATUS_DOING: ${{ vars.STATUS_DOING }}
