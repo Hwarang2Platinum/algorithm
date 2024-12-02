@@ -6,48 +6,15 @@ dotenv.config();
 
 const GIT_TOKEN = process.env.GIT_TOKEN;
 const PROJECT_ID = process.env.PROJECT_ID;
+const SOURCE_OWNER = process.env.SOURCE_OWNER;
+const SOURCE_REPO = process.env.SOURCE_REPO;
+const SOURCE_PATH = process.env.SOURCE_PATH;
+const TARGET_ORG = process.env.TARGET_ORG;
+const TARGET_REPO = process.env.TARGET_REPO;
+const LEVELS = JSON.parse(process.env.LEVELS);
 const SOLVED_AC_BASE_URL = 'https://solved.ac/api/v3/problem/show';
-const SOURCE_OWNER = 'tony9402';
-const SOURCE_REPO = 'baekjoon';
-const SOURCE_PATH = 'picked.md';
-const TARGET_ORG = 'Hwarang2Platinum';
-const TARGET_REPO = 'algorithm';
 
 const octokit = new Octokit({ auth: GIT_TOKEN });
-
-const LEVELS = [
-  'Unrated',
-  'Bronze V',
-  'Bronze IV',
-  'Bronze III',
-  'Bronze II',
-  'Bronze I',
-  'Silver V',
-  'Silver IV',
-  'Silver III',
-  'Silver II',
-  'Silver I',
-  'Gold V',
-  'Gold IV',
-  'Gold III',
-  'Gold II',
-  'Gold I',
-  'Platinum V',
-  'Platinum IV',
-  'Platinum III',
-  'Platinum II',
-  'Platinum I',
-  'Diamond V',
-  'Diamond IV',
-  'Diamond III',
-  'Diamond II',
-  'Diamond I',
-  'Ruby V',
-  'Ruby IV',
-  'Ruby III',
-  'Ruby II',
-  'Ruby I',
-];
 
 const fetchPickedTodayAlgorithm = async () => {
   const { data } = await octokit.repos.getContent({
@@ -147,6 +114,7 @@ const createIssue = async (problemId, problemTitle, problemLevel, problemType) =
       'InbumS',
       'Hwarang-Oh',
       'chanmin97',
+      'Aiden-Jung',
       'seungki-cho',
     ],
   });
