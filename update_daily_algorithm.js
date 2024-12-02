@@ -147,7 +147,6 @@ const createIssue = async (problemId, problemTitle, problemLevel, problemType) =
       'InbumS',
       'Hwarang-Oh',
       'chanmin97',
-      'Aiden-Jung',
       'seungki-cho',
     ],
   });
