@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 22 # Node.js 버전 지정
+          node-version: 22
 
       # 3. 의존성 설치
       - name: Install dependencies
@@ -27,5 +27,6 @@ jobs:
       # 4. 스크립트 실행
       - name: Run script
         env:
-          GIT_TOKEN: ${{ secrets.ORG_PAT_TOKEN }} # GitHub Secrets 사용
+          GIT_TOKEN: ${{ secrets.ORG_PAT_TOKEN }}
+          PROJECT_ID: ${{ secrets.HPDD_PROJECT_ID }}
         run: node update_daily_algorithm.js

@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const GIT_TOKEN = process.env.GIT_TOKEN;
+const PROJECT_ID = process.env.PROJECT_ID;
 const SOLVED_AC_BASE_URL = 'https://solved.ac/api/v3/problem/show';
 const SOURCE_OWNER = 'tony9402';
 const SOURCE_REPO = 'baekjoon';
@@ -98,9 +99,9 @@ const createIssue = async (problemId, problemTitle, problemLevel, problemType) =
   }
 
   const issueBody = `
-  # <a href="https://www.acmicpc.net/problem/${problemId}" target="_blank">백준링크</a>
+  # <a href="https://www.acmicpc.net/problem/${problemId}" target="_blank">📝 백준링크</a>
   
-  ## Solver
+  ## 📌 **Solver**  
   - [ ] 김경호 @kkho9654
   - [ ] 김인엽 @wintiger98
   - [ ] 김종호 @dino9881
@@ -111,20 +112,20 @@ const createIssue = async (problemId, problemTitle, problemLevel, problemType) =
   - [ ] 정현석 @Aiden-Jung
   - [ ] 조승기 @seungki-cho
 
-  ### Hint 1 : 난이도
+  ### 📊 **Hint 1 : 난이도**  
   <details>
   <summary>난이도 보기</summary>
   ${problemLevel}
   </details>
 
-  ### Hint 2 : 문제 유형
+  ### 📚 **Hint 2 : 문제 유형**
 
   <details>
   <summary>유형 보기</summary>
   ${problemType}
   </details>
 
-  ### Hint 3 : 풀이법 ( ChatGPT 4o )
+  ### 🧩 **Hint 3 : 풀이법 ( ChatGPT 4.0 )**  
 
   <details>
   <summary>풀이법 보기</summary>
@@ -132,7 +133,7 @@ const createIssue = async (problemId, problemTitle, problemLevel, problemType) =
   </details>
   `;
 
-  const data = await octokit.issues.create({
+  const { data: issue } = await octokit.issues.create({
     owner: TARGET_ORG,
     repo: TARGET_REPO,
     title: issueTitle,
@@ -150,7 +151,28 @@ const createIssue = async (problemId, problemTitle, problemLevel, problemType) =
       'seungki-cho',
     ],
   });
-  console.log(`Issue created: ${data.data.html_url}`);
+  console.log(`Issue created: ${issue.html_url}`);
+
+  try {
+    await octokit.graphql(
+      `
+      mutation($projectId: ID!, $issueId: ID!) {
+        addProjectV2ItemById(input: { projectId: $projectId, contentId: $issueId }) {
+          item {
+            id
+          }
+        }
+      }
+      `,
+      {
+        projectId: PROJECT_ID,
+        issueId: issue.node_id,
+      }
+    );
+    console.log(`Issue added to project: ${PROJECT_ID}`);
+  } catch (error) {
+    console.error(`Error adding issue to project: ${PROJECT_ID}`, error.message);
+  }
 };
 
 const main = async () => {
