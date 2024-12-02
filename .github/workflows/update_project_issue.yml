@@ -3,12 +3,12 @@ name: Create Sub-Issues for Solvers
 on:
   issues:
     types:
-      - opened
       - edited
 
 jobs:
   create-sub-issue:
     runs-on: ubuntu-latest
+    if: github.event.issue.title && github.event.issue.title.match(/^\[\d{8}\] BOJ \d+ .+/)
 
     steps:
       - name: Checkout repository
@@ -31,5 +31,6 @@ jobs:
           PROJECT_FIELD_ID: ${{ secrets.HPDD_PROJECT_FIELD_ID }}
           STATUS_DOING: ${{ vars.STATUS_DOING }}
           STATUS_DELETED: ${{ vars.STATUS_DELETED }}
+          STATUS_PROBLEMS: ${{ vars.STATUS_PROBLEMS }}
         run: |
-          node create_solver_issue.js
+          node update_project_issue.js
