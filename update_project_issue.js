@@ -11,6 +11,7 @@ const PROJECT_ID = process.env.PROJECT_ID;
 const PROJECT_FIELD_ID = process.env.PROJECT_FIELD_ID;
 const STATUS_DOING = process.env.STATUS_DOING;
 const STATUS_DELETED = process.env.STATUS_DELETED;
+const STATUS_PROBLEMS = process.env.STATUS_PROBLEMS;
 const octokit = new Octokit({ auth: GIT_TOKEN });
 
 /**
@@ -84,7 +85,7 @@ const closeSubIssue = async (parentIssue, solver) => {
       owner: TARGET_ORG,
       repo: TARGET_REPO,
       state: 'open',
-      creator: solver.assignee,
+      assignee: solver.assignee,
     });
 
     const subIssue = issues.find((issue) =>
@@ -190,7 +191,8 @@ const main = async () => {
         await closeSubIssue(issue, checkbox);
       }
     }
-  }
+  } else if (context.payload.action === 'opened')
+    await assignToProjectAndSetStatus(issue, STATUS_PROBLEMS);
 };
 
 main().catch((error) => console.error('Error:', error.message));
