@@ -92,14 +92,13 @@ const closeSubIssue = async (parentIssue, solver) => {
     );
 
     if (subIssue) {
-      await assignToProjectAndSetStatus(subIssue, STATUS_DELETED);
+      await updateProjectItemStatus(subIssue, STATUS_DELETED);
       await octokit.issues.update({
         owner: TARGET_ORG,
         repo: TARGET_REPO,
         issue_number: subIssue.number,
         state: 'closed',
       });
-
       console.log(`Sub-Issue closed: ${subIssue.html_url}`);
     } else console.log(`No sub-issue found for ${solver.assignee}`);
   } catch (error) {
@@ -107,7 +106,7 @@ const closeSubIssue = async (parentIssue, solver) => {
   }
 };
 
-const assignToProjectAndSetStatus = async (subIssue, statusOptionId) => {
+const assignToProject = async (subIssue) => {
   try {
     const addToProjectResponse = await octokit.graphql(
       `
@@ -124,17 +123,24 @@ const assignToProjectAndSetStatus = async (subIssue, statusOptionId) => {
         issueId: subIssue.node_id,
       }
     );
-
     const itemId = addToProjectResponse.addProjectV2ItemById.item.id;
+    console.log(`Sub-Issue assigned to project with item ID: ${itemId}`);
+    return itemId;
+  } catch (error) {
+    console.error('Error assigning sub-issue to project:', error.message);
+  }
+};
 
+const updateProjectItemStatus = async (itemId, statusOptionId) => {
+  try {
     await octokit.graphql(
       `
       mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
         updateProjectV2ItemFieldValue(
           input: {
-            projectId: $projectId
-            itemId: $itemId
-            fieldId: $fieldId
+            projectId: $projectId,
+            itemId: $itemId,
+            fieldId: $fieldId,
             value: { singleSelectOptionId: $optionId }
           }
         ) {
@@ -151,10 +157,19 @@ const assignToProjectAndSetStatus = async (subIssue, statusOptionId) => {
         fieldId: PROJECT_FIELD_ID,
       }
     );
-
-    console.log(`Sub-Issue assigned to project and status set to Doing.`);
+    console.log(`Project item status updated to option ID: ${statusOptionId}`);
   } catch (error) {
-    console.error('Error assigning sub-issue to project:', error.message);
+    console.error('Error updating project item status:', error.message);
+  }
+};
+
+const assignToProjectAndSetStatus = async (subIssue, statusOptionId) => {
+  try {
+    const itemId = await assignToProject(subIssue);
+    await updateProjectItemStatus(itemId, statusOptionId);
+    console.log(`Sub-Issue assigned to project and status set to option ID: ${statusOptionId}.`);
+  } catch (error) {
+    console.error('Error in assigning to project and setting status:', error);
   }
 };
 
@@ -173,14 +188,6 @@ const main = async () => {
         await assignToProjectAndSetStatus(subIssue, STATUS_DOING);
       } else {
         await closeSubIssue(issue, checkbox);
-      }
-    }
-  } else if (context.payload.action === 'opened') {
-    const checkboxes = parseCheckBoxes(issue.body);
-    for (const checkbox of checkboxes) {
-      if (checkbox.checked) {
-        const subIssue = await createSubIssue(issue, checkbox);
-        await assignToProjectAndSetStatus(subIssue, STATUS_DOING);
       }
     }
   }
