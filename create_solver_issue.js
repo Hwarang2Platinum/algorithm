@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
+import github from '@actions/github';
 import { Octokit } from '@octokit/rest';
-import { github } from '@actions/github';
 
 dotenv.config();
 
