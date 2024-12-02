@@ -29,4 +29,10 @@ jobs:
         env:
           GIT_TOKEN: ${{ secrets.ORG_PAT_TOKEN }}
           PROJECT_ID: ${{ secrets.HPDD_PROJECT_ID }}
+          SOURCE_OWNER: ${{ vars.SOURCE_OWNER }}
+          SOURCE_REPO: ${{ vars.SOURCE_REPO }}
+          SOURCE_PATH: ${{ vars.SOURCE_PATH }}
+          TARGET_ORG: ${{ vars.TARGET_ORG }}
+          TARGET_REPO: ${{ vars.TARGET_REPO }}
+          LEVELS: ${{ vars.LEVELS }}
         run: node update_daily_algorithm.js
