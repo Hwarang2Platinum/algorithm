@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import github from '@actions/github';
 import { Octokit } from '@octokit/rest';
 
 dotenv.config();
@@ -9,105 +8,79 @@ const TARGET_ORG = process.env.TARGET_ORG;
 const TARGET_REPO = process.env.TARGET_REPO;
 const PROJECT_ID = process.env.PROJECT_ID;
 const PROJECT_FIELD_ID = process.env.PROJECT_FIELD_ID;
-const STATUS_DOING = process.env.STATUS_DOING;
-const STATUS_DELETED = process.env.STATUS_DELETED;
-const STATUS_PROBLEMS = process.env.STATUS_PROBLEMS;
 const octokit = new Octokit({ auth: GIT_TOKEN });
 
-/**
- * IMP : Main Issue CheckBox를 확인합니다
- * @param {*} target
- * @returns
- */
-const parseCheckBoxes = (target) => {
-  const regex = /- \[([ xX])\] (.+) @([a-zA-Z0-9-_]+)/g;
-  const matches = [...target.matchAll(regex)];
-  return matches.map((match) => ({
-    checked: match[1].toLowerCase() === 'x',
-    name: match[2].trim(),
-    assignee: match[3].trim(),
-  }));
-};
+export const createIssue = async (problem) => {
+  const { problemId, problemTitle, problemLevel, problemType, date } = problem;
+  const issueTitle = `[${date}] BOJ ${problemId} ${problemTitle}`;
 
-/**
- * IMP : Main Issue CheckBox가 "변경"되었는지 확인합니다
- * @param {*} oldBody
- * @param {*} newBody
- * @returns
- */
-const watchChangedCheckbox = (oldBody, newBody) => {
-  const oldCheckboxes = parseCheckBoxes(oldBody);
-  const newCheckboxes = parseCheckBoxes(newBody);
-  const changes = [];
-  for (let i = 0; i < newCheckboxes.length; i++) {
-    if (newCheckboxes[i].checked !== oldCheckboxes[i].checked) changes.push(newCheckboxes[i]);
+  let issueLabels = ['백준', 'Daily Update', 'Secret'];
+  if (problemLevel === 'Unrated') {
+    issueLabels.push('Unratedc');
+  } else if (problemLevel.startsWith('Bronze') || problemLevel.startsWith('Silver')) {
+    issueLabels.push('Basic');
+  } else if (problemLevel.startsWith('Gold')) {
+    issueLabels.push('Problem');
+  } else if (['Platinum', 'Diamond', 'Ruby'].some((level) => problemLevel.startsWith(level))) {
+    issueLabels.push('Challenge');
   }
-  return changes;
-};
-
-/**
- * IMP : Sub Issue를 생성합니다.
- * @param {*} parentIssue
- * @param {*} solver
- * @returns
- */
-const createSubIssue = async (parentIssue, solver) => {
-  const issueTitle = `[Sub-Issue] Solve: ${parentIssue.title} (${solver.name})`;
 
   const issueBody = `
-  ## Parent Issue
-  [#${parentIssue.number}](${parentIssue.html_url})
+  # <a href="https://www.acmicpc.net/problem/${problemId}" target="_blank">📝 백준링크</a>
+  
+  ## 📌 **Solver**  
+  - [ ] 김경호 @kkho9654
+  - [ ] 김인엽 @wintiger98
+  - [ ] 김종호 @dino9881
+  - [ ] 김정규 @bladerunner3201
+  - [ ] 송인범 @InbumS
+  - [ ] 오화랑 @Hwarang-Oh
+  - [ ] 이찬민 @chanmin97
+  - [ ] 정현석 @Aiden-Jung
+  - [ ] 조승기 @seungki-cho
 
-  ## Solver
-  Assigned to: @${solver.assignee}
+  ### 📊 **Hint 1 : 난이도**  
+  <details>
+  <summary>난이도 보기</summary>
+  ${problemLevel}
+  </details>
 
-  ## Task
-  - [ ] Solve the problem
-  - [ ] Create a pull request
+  ### 📚 **Hint 2 : 문제 유형**
+
+  <details>
+  <summary>유형 보기</summary>
+  ${problemType}
+  </details>
+
+  ### 🧩 **Hint 3 : 풀이법 ( ChatGPT 4.0 )**  
+
+  <details>
+  <summary>풀이법 보기</summary>
+  구현 예정
+  </details>
   `;
 
-  const { data } = await octokit.issues.create({
+  const { data: issue } = await octokit.issues.create({
     owner: TARGET_ORG,
     repo: TARGET_REPO,
     title: issueTitle,
     body: issueBody,
-    assignees: [solver.assignee],
-    labels: ['Solve'],
+    labels: issueLabels,
+    assignees: [
+      'kkho9654',
+      'wintiger98',
+      'dino9881',
+      'bladerunner3201',
+      'InbumS',
+      'Hwarang-Oh',
+      'chanmin97',
+      'seungki-cho',
+    ],
   });
-
-  console.log(`Sub-Issue created: ${data.html_url}`);
-  return data;
+  console.log(`Issue created: ${issue.html_url}`);
 };
 
-const closeSubIssue = async (parentIssue, solver) => {
-  try {
-    const { data: issues } = await octokit.issues.listForRepo({
-      owner: TARGET_ORG,
-      repo: TARGET_REPO,
-      state: 'open',
-      assignee: solver.assignee,
-    });
-
-    const subIssue = issues.find((issue) =>
-      issue.title.includes(`[Sub-Issue] Solve: ${parentIssue.title}`)
-    );
-
-    if (subIssue) {
-      await updateProjectItemStatus(subIssue, STATUS_DELETED);
-      await octokit.issues.update({
-        owner: TARGET_ORG,
-        repo: TARGET_REPO,
-        issue_number: subIssue.number,
-        state: 'closed',
-      });
-      console.log(`Sub-Issue closed: ${subIssue.html_url}`);
-    } else console.log(`No sub-issue found for ${solver.assignee}`);
-  } catch (error) {
-    console.error('Error closing sub-issue:', error.message);
-  }
-};
-
-const assignToProject = async (subIssue) => {
+const assignToProject = async (Issue) => {
   try {
     const addToProjectResponse = await octokit.graphql(
       `
@@ -121,14 +94,14 @@ const assignToProject = async (subIssue) => {
     `,
       {
         projectId: PROJECT_ID,
-        issueId: subIssue.node_id,
+        issueId: Issue.node_id,
       }
     );
     const itemId = addToProjectResponse.addProjectV2ItemById.item.id;
-    console.log(`Sub-Issue assigned to project with item ID: ${itemId}`);
+    console.log(`Issue assigned to project with item ID: ${itemId}`);
     return itemId;
   } catch (error) {
-    console.error('Error assigning sub-issue to project:', error.message);
+    console.error('Error assigning issue to project:', error.message);
   }
 };
 
@@ -164,35 +137,12 @@ const updateProjectItemStatus = async (itemId, statusOptionId) => {
   }
 };
 
-const assignToProjectAndSetStatus = async (subIssue, statusOptionId) => {
+export const assignToProjectAndSetStatus = async (Issue, statusOptionId) => {
   try {
-    const itemId = await assignToProject(subIssue);
+    const itemId = await assignToProject(Issue);
     await updateProjectItemStatus(itemId, statusOptionId);
-    console.log(`Sub-Issue assigned to project and status set to option ID: ${statusOptionId}.`);
+    console.log(`Issue assigned to project and status set to option ID: ${statusOptionId}.`);
   } catch (error) {
     console.error('Error in assigning to project and setting status:', error);
   }
 };
-
-const main = async () => {
-  const { context } = github;
-  const issue = context.payload.issue;
-  if (context.payload.action === 'edited' && context.payload.changes?.body) {
-    const oldBody = context.payload.changes.body.from;
-    const newBody = issue.body;
-
-    const changedCheckboxes = watchChangedCheckbox(oldBody, newBody);
-
-    for (const checkbox of changedCheckboxes) {
-      if (checkbox.checked) {
-        const subIssue = await createSubIssue(issue, checkbox);
-        await assignToProjectAndSetStatus(subIssue, STATUS_DOING);
-      } else {
-        await closeSubIssue(issue, checkbox);
-      }
-    }
-  } else if (context.payload.action === 'opened')
-    await assignToProjectAndSetStatus(issue, STATUS_PROBLEMS);
-};
-
-main().catch((error) => console.error('Error:', error.message));
