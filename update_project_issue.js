@@ -12,7 +12,8 @@ const octokit = new Octokit({ auth: GIT_TOKEN });
 
 export const createIssue = async (problem) => {
   const { problemId, problemTitle, problemLevel, problemType, date } = problem;
-  const issueTitle = `[${date}] BOJ ${problemId} ${problemTitle}`;
+  let issueDate = date.toISOString().split('T')[0].replace(/-/g, '');
+  const issueTitle = `[${issueDate}] BOJ ${problemId} ${problemTitle}`;
 
   let issueLabels = ['백준', 'Daily Update', 'Secret'];
   if (problemLevel === 'Unrated') {

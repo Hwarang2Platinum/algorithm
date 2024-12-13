@@ -36,19 +36,21 @@ const main = async () => {
           continue;
         }
 
-        const types = problem.tags.map((tag) => {
-          const koDisplayName = tag.displayNames.find(
-            (displayName) => displayName.language === 'ko'
-          );
-          return koDisplayName ? koDisplayName.name : 'Secret';
-        });
+        const types = problem.tags
+          .map((tag) => {
+            const koDisplayName = tag.displayNames.find(
+              (displayName) => displayName.language === 'ko'
+            );
+            return koDisplayName ? koDisplayName.name : 'Secret';
+          })
+          .join(', ');
 
         const newProblem = {
           problemId: problem.problemId,
           problemTitle: problem.titleKo,
           problemLevel: LEVELS[problem.level],
           problemType: types,
-          date: new Date().toISOString().split('T')[0].replace(/-/g, ''),
+          date: new Date(),
         };
         console.log('newProblem: ', newProblem);
         await addProblemToHistory(newProblem);
