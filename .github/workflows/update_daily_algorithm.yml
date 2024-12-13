@@ -29,10 +29,15 @@ jobs:
         env:
           GIT_TOKEN: ${{ secrets.ORG_PAT_TOKEN }}
           PROJECT_ID: ${{ secrets.HPDD_PROJECT_ID }}
-          SOURCE_OWNER: ${{ vars.SOURCE_OWNER }}
-          SOURCE_REPO: ${{ vars.SOURCE_REPO }}
-          SOURCE_PATH: ${{ vars.SOURCE_PATH }}
+          PROJECT_FIELD_ID: ${{ secrets.HPDD_PROJECT_FIELD_ID }}
+          DB_USER: ${{ secrets.HPDD_DATABASE_ID }}
+          DB_NAME: ${{ secrets.HPDD_DATABASE_NAME }}
+          DB_HOST: ${{ secrets.HPDD_DATABASE_ENDPOINT }}
+          DB_PASSWORD: ${{ secrets.HPDD_DATABASE_PASSWORD }}
+
+          LEVELS: ${{ vars.LEVELS }}
+          TYPES: ${{ vars.TYPES }}
           TARGET_ORG: ${{ vars.TARGET_ORG }}
           TARGET_REPO: ${{ vars.TARGET_REPO }}
-          LEVELS: ${{ vars.LEVELS }}
+          STATUS_PROBLEMS: ${{ vars.STATUS_PROBLEMS }}
         run: node update_daily_algorithm.js
