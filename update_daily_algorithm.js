@@ -3,8 +3,8 @@ import {
   isProblemAlreadyRecommended,
   addProblemToHistory,
   fetchProblemsFromSolvedAc,
-} from './generate_problem';
-import { createIssue, assignToProjectAndSetStatus } from './update_project_issue';
+} from './generate_problem.js';
+import { createIssue, assignToProjectAndSetStatus } from './update_project_issue.js';
 
 dotenv.config();
 
