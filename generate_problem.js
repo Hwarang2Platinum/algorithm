@@ -23,8 +23,14 @@ const getRandomTag = () => {
  */
 export const isProblemAlreadyRecommended = async (problemId) => {
   const query = `SELECT 1 FROM history WHERE problem_id = ?`;
-  const [rows] = await pool.query(query, [problemId]);
-  return rows.length > 0;
+  try {
+    const [rows] = await pool.query(query, [problemId]);
+    console.log(`Query executed: ${query} with problem_id: ${problemId}`);
+    return rows.length > 0;
+  } catch (error) {
+    console.error(`Error executing query: ${query} with problem_id: ${problemId}`, error.message);
+    throw error;
+  }
 };
 
 /**
@@ -33,13 +39,22 @@ export const isProblemAlreadyRecommended = async (problemId) => {
  */
 export const addProblemToHistory = async (problem) => {
   const query = `INSERT INTO history (problem_id, title, level, types, date) VALUES (?, ?, ?, ?, ?)`;
-  await pool.query(query, [
-    problem.problemId,
-    problem.problemTitle,
-    problem.problemLevel,
-    problem.problemType,
-    problem.date,
-  ]);
+  try {
+    await pool.query(query, [
+      problem.problemId,
+      problem.problemTitle,
+      problem.problemLevel,
+      problem.problemType,
+      problem.date,
+    ]);
+    console.log(`Problem added to history: ${JSON.stringify(problem)}`);
+  } catch (error) {
+    console.error(
+      `Error executing query: ${query} with problem: ${JSON.stringify(problem)}`,
+      error.message
+    );
+    throw error;
+  }
 };
 
 /**
@@ -56,8 +71,6 @@ export const fetchProblemsFromSolvedAc = async () => {
         sort: 'random',
       },
     });
-    console.log(`Fetched problems with tag "${type}".`);
-    console.log(response.data.items);
     return response.data.items;
   } catch (error) {
     console.error(`Error fetching problems with tag "${type}":`, error.message);
