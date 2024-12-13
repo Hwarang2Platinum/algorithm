@@ -5,7 +5,7 @@ import axios from 'axios';
 dotenv.config();
 
 const TYPES = JSON.parse(process.env.TYPES);
-const SOLVED_AC_PROBLEM_URL = 'https://solved.ac/api/v3/problem';
+const SOLVED_AC_PROBLEM_URL = 'https://solved.ac/api/v3/search/problem';
 
 /**
  * IMP : 문제의 Tag를 랜덤으로 가져오는 함수
