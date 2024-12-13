@@ -12,6 +12,7 @@ const SOLVED_AC_PROBLEM_URL = 'https://solved.ac/api/v3/problem';
  * @returns
  */
 const getRandomTag = () => {
+  console.log(TYPES);
   const randomIndex = Math.floor(Math.random() * TYPES.length);
   return TYPES[randomIndex];
 };
