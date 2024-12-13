@@ -32,7 +32,7 @@ jobs:
           PROJECT_FIELD_ID: ${{ secrets.HPDD_PROJECT_FIELD_ID }}
           DB_USER: ${{ secrets.HPDD_DATABASE_ID }}
           DB_NAME: ${{ secrets.HPDD_DATABASE_NAME }}
-          DB_HOST: ${{ secrets.HPDD_DATABASE_ENDPOINT }}
+          DB_HOST: ${{ secrets.HPDD_DATABASE_HOST }}
           DB_PASSWORD: ${{ secrets.HPDD_DATABASE_PASSWORD }}
 
           LEVELS: ${{ vars.LEVELS }}
