@@ -52,7 +52,7 @@ export const fetchProblemsFromSolvedAc = async () => {
   try {
     const response = await axios.get(SOLVED_AC_PROBLEM_URL, {
       params: {
-        query: `tier:B1..P5 tag:${type} solved:>=100`,
+        query: `tier:B1..P5%20tag:${type}%20solved:>=100`,
         sort: 'random',
       },
     });
