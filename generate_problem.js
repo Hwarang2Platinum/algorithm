@@ -51,6 +51,7 @@ export const addProblemToHistory = async (problem) => {
 export const fetchProblemsFromSolvedAc = async () => {
   try {
     let type = getRandomTag();
+    console.log(type);
     const response = await axios.get(SOLVED_AC_PROBLEM_URL, {
       params: {
         query: `tier:B1..P5 tag:${type} solved:>=100`,
