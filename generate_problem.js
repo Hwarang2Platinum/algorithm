@@ -12,7 +12,6 @@ const SOLVED_AC_PROBLEM_URL = 'https://solved.ac/api/v3/problem';
  * @returns
  */
 const getRandomTag = () => {
-  console.log(TYPES);
   const randomIndex = Math.floor(Math.random() * TYPES.length);
   return TYPES[randomIndex];
 };
@@ -49,15 +48,16 @@ export const addProblemToHistory = async (problem) => {
  * @returns
  */
 export const fetchProblemsFromSolvedAc = async () => {
+  let type = getRandomTag();
   try {
-    let type = getRandomTag();
-    console.log(type);
     const response = await axios.get(SOLVED_AC_PROBLEM_URL, {
       params: {
         query: `tier:B1..P5 tag:${type} solved:>=100`,
         sort: 'random',
       },
     });
+    console.log(`Fetched problems with tag "${type}".`);
+    console.log(response.data.items);
     return response.data.items;
   } catch (error) {
     console.error(`Error fetching problems with tag "${type}":`, error.message);
