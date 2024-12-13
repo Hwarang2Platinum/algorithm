@@ -29,6 +29,7 @@ const main = async () => {
 
       for (const problem of problems) {
         const isDuplicate = await isProblemAlreadyRecommended(problem.problemId);
+        console.log('isDuplicate: ', isDuplicate);
 
         if (isDuplicate) {
           console.log(`Problem ${problem.problemId} is already recommended.`);
@@ -49,6 +50,7 @@ const main = async () => {
           problemType: types,
           date: new Date().toISOString().split('T')[0].replace(/-/g, ''),
         };
+        console.log('newProblem: ', newProblem);
         await addProblemToHistory(newProblem);
 
         const issue = await createIssue(newProblem);

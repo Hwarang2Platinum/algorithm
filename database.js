@@ -13,4 +13,12 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
+pool.on('connection', (connection) => {
+  console.log('MySQL Connection Established:', connection.threadId);
+});
+
+pool.on('error', (err) => {
+  console.error('MySQL Pool Error:', err.code, err.message);
+});
+
 export default pool;
