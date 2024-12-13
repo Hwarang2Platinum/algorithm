@@ -1,10 +1,11 @@
 import dotenv from 'dotenv';
+import pool from './database.js';
+import { createIssue, assignToProjectAndSetStatus } from './update_project_issue.js';
 import {
   isProblemAlreadyRecommended,
   addProblemToHistory,
   fetchProblemsFromSolvedAc,
 } from './generate_problem.js';
-import { createIssue, assignToProjectAndSetStatus } from './update_project_issue.js';
 
 dotenv.config();
 
@@ -64,7 +65,12 @@ const main = async () => {
     }
   } catch (error) {
     console.error('Error in main workflow:', error.message);
+  } finally {
+    console.log('Closing database connection pool...');
+    await pool.end();
+    console.log('Database connection pool closed.');
+    process.exit(0);
   }
 };
 
-main().catch((error) => console.error('Error:', error.message));
+main();

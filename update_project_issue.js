@@ -79,6 +79,7 @@ export const createIssue = async (problem) => {
     ],
   });
   console.log(`Issue created: ${issue.html_url}`);
+  return issue;
 };
 
 const assignToProject = async (Issue) => {
