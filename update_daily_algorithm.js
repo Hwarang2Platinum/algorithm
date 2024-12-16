@@ -3,6 +3,7 @@ import pool from './database.js';
 import { createIssue, assignToProjectAndSetStatus } from './update_project_issue.js';
 import {
   isProblemAlreadyRecommended,
+  isProblemValid,
   addProblemToHistory,
   fetchProblemsFromSolvedAc,
 } from './generate_problem.js';
@@ -25,15 +26,21 @@ const main = async () => {
   try {
     let selectedProblems = 0;
 
-    while (selectedProblems < 3) {
+    while (selectedProblems < 1) {
       const problems = await fetchProblemsFromSolvedAc();
 
       for (const problem of problems) {
+        // IMP : 중복된 문제인지 확인
         const isDuplicate = await isProblemAlreadyRecommended(problem.problemId);
-        console.log('isDuplicate: ', isDuplicate);
-
         if (isDuplicate) {
           console.log(`Problem ${problem.problemId} is already recommended.`);
+          continue;
+        }
+
+        // IMP : 문제가 유효한지 확인
+        const isValid = isProblemValid(problem);
+        if (!isValid) {
+          console.log(`Problem ${problem.problemId} is not valid.`);
           continue;
         }
 

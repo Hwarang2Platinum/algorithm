@@ -34,6 +34,15 @@ export const isProblemAlreadyRecommended = async (problemId) => {
 };
 
 /**
+ * IMP : Fetch한 문제가 Korean & AcceptedUserCount가 100명 이상인지 확인하는 함수
+ * TODO : Korean 문제인 지 확인하는 로직 추가 ( 현재는 AcceptedUserCount만 확인 )
+ */
+export const isProblemValid = (problem) => {
+  const acceptedUserCount = problem.acceptedUserCount;
+  return acceptedUserCount >= 100;
+};
+
+/**
  * IMP : 추천한 문제를 History에 추가하는 함수
  * @param {*} problem
  */
