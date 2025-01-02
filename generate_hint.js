@@ -86,7 +86,7 @@ export const getProblemHint = async (problemId, problemTitle, problemType) => {
           role: 'system',
           content: `You are an AI assistant that provides hints and Java logic code for solving algorithm problems. Always use the following template for your response:
           
-### 🛠 문제 해결 방법
+### **문제 해결 방법**
 
 ### 📋 **문제 설명**
 <Problem Description>
