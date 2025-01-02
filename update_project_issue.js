@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { getProblemHint } from './generate_hint';
 import { Octokit } from '@octokit/rest';
 
 dotenv.config();
@@ -17,7 +18,7 @@ export const createIssue = async (problem) => {
 
   let issueLabels = ['백준', 'Daily Update', 'Secret'];
   if (problemLevel === 'Unrated') {
-    issueLabels.push('Unratedc');
+    issueLabels.push('Unrated');
   } else if (problemLevel.startsWith('Bronze') || problemLevel.startsWith('Silver')) {
     issueLabels.push('Basic');
   } else if (problemLevel.startsWith('Gold')) {
@@ -25,6 +26,9 @@ export const createIssue = async (problem) => {
   } else if (['Platinum', 'Diamond', 'Ruby'].some((level) => problemLevel.startsWith(level))) {
     issueLabels.push('Challenge');
   }
+
+  // IMP : GPT 4.0을 사용하여 힌트를 생성함
+  const problemHint = await getProblemHint(problemId, problemTitle, problemType);
 
   const issueBody = `
   # <a href="https://www.acmicpc.net/problem/${problemId}" target="_blank">📝 백준링크</a>
@@ -57,7 +61,7 @@ export const createIssue = async (problem) => {
 
   <details>
   <summary>풀이법 보기</summary>
-  구현 예정
+  ${problemHint}
   </details>
   `;
 
