@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { getProblemHint } from './generate_hint';
+import { getProblemHint } from './generate_hint.js';
 import { Octokit } from '@octokit/rest';
 
 dotenv.config();

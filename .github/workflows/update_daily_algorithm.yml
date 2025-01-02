@@ -28,6 +28,7 @@ jobs:
       - name: Run script
         env:
           GIT_TOKEN: ${{ secrets.ORG_PAT_TOKEN }}
+          GPT_TOKEN: ${{ secrets.HPDD_GPT_TOKEN }}
           PROJECT_ID: ${{ secrets.HPDD_PROJECT_ID }}
           PROJECT_FIELD_ID: ${{ secrets.HPDD_PROJECT_FIELD_ID }}
           DB_USER: ${{ secrets.HPDD_DATABASE_ID }}
