@@ -68,6 +68,7 @@ export const addProblemToHistory = async (problem) => {
 
 /**
  * IMP : Daily Algorithm 문제를 추천하는 함수
+ * ! 2025.01.02 => 풀어낸 사람 1000명 이상의 문제만 추천하는 것으로 변경
  * @param {*} type
  * @returns
  */
@@ -76,7 +77,7 @@ export const fetchProblemsFromSolvedAc = async () => {
   try {
     const response = await axios.get(SOLVED_AC_PROBLEM_URL, {
       params: {
-        query: `tier:B1..P5%20tag:${type}%20solved:>=100`,
+        query: `tier:B1..P5%20tag:${type}%20solved:>=1000`,
         sort: 'random',
       },
     });
